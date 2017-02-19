@@ -57,8 +57,8 @@ public class WordCount {
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path("hdfs://192.168.106.128:9000/user"));
-        FileOutputFormat.setOutputPath(job, new Path("hdfs://192.168.106.128:9000/user/output"));
+        FileInputFormat.addInputPath(job, new Path("hdfs://hadoop:9000/user"));
+        FileOutputFormat.setOutputPath(job, new Path("hdfs://hadoop:9000/user/output"));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

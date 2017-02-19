@@ -15,8 +15,9 @@ import java.net.URI;
 
 public class Test {
     private static void uploadToHdfs() throws Exception {
-        String localSrc = "d://process-info.log";
-        String dst = "hdfs://192.168.106.128:9000/user/qq.txt";
+//        String localSrc = "d://process-info.log";
+        String localSrc = "e://SmsUtil.java";
+        String dst = "hdfs://192.168.0.253:9000/user/qq.txt";
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(localSrc));
         Configuration conf = new Configuration();
 
