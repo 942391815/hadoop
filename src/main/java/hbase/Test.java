@@ -26,29 +26,12 @@ public class Test {
 //        insert(connection);
 //        checkAndPut(connection);
 //        testScanner(connection);
-        testFilter(connection);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
 //        11776
     }
 
-    public static void testFilter(Connection connection) throws Exception{
-        Scan scan = new Scan();
-        Table user = connection.getTable(TableName.valueOf("user"));
-        scan.setStartRow(Bytes.toBytes("lisi"));
-        scan.setStopRow(Bytes.toBytes("lisi10"));
-        RowFilter rowFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL, new BinaryComparator((Bytes.toBytes("lisi22"))));
-        scan.setFilter(rowFilter);
-
-        ResultScanner scanner = user.getScanner(scan);
-        for(Result res:scanner){
-            System.out.println(res);
-        }
-
-
-
-    }
-    public static void testScanner(Connection connection) throws Exception{
+    public static void testScanner(Connection connection) throws Exception {
 
         try {
             Table user = connection.getTable(TableName.valueOf("user"));
@@ -56,7 +39,7 @@ public class Test {
             scan.setStartRow(Bytes.toBytes("lisi"));
             scan.setStopRow(Bytes.toBytes("lisi99"));
             ResultScanner scanner = user.getScanner(scan);
-            Thread.sleep(HConstants.DEFAULT_HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD+10000);
+            Thread.sleep(HConstants.DEFAULT_HBASE_CLIENT_SCANNER_TIMEOUT_PERIOD + 10000);
             for (Result each : scanner) {
                 System.out.println(Bytes.toString(each.getRow()));
             }
@@ -88,9 +71,9 @@ public class Test {
     private static void insert(Connection connection) throws IOException {
         Table table = connection.getTable(TableName.valueOf("user"));
         List<Put> list = new ArrayList<Put>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100; i++) {
             Put put = new Put(Bytes.toBytes("lisi" + i));
-            put.addColumn(Bytes.toBytes("f1"), Bytes.toBytes("age" + i), Bytes.toBytes("24" + i));
+            put.addColumn(Bytes.toBytes("info"), Bytes.toBytes("name"), Bytes.toBytes("lisi" + i));
             list.add(put);
         }
         table.put(list);
