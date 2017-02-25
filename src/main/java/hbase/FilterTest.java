@@ -6,6 +6,8 @@ import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 
 /**
+ * todo 过滤器深入理解
+ *
  * create 'user','info'
  * Created by qiaogu on 2017/2/25.
  */
@@ -13,7 +15,22 @@ public class FilterTest {
     public static void main(String[] args) throws Exception {
         Connection connection = HbaseClient.getConnection();
 //        testQualiFiler(connection);
-        testValueFilter(connection);
+//        testValueFilter(connection);
+        testDependentColumnFilter(connection);
+    }
+
+    /**
+     * 参考列过滤器
+     * @param connection
+     * @throws Exception
+     */
+    public static void testDependentColumnFilter(Connection connection) throws Exception{
+        Table table = connection.getTable(TableName.valueOf("user"));
+        Scan scan = new Scan();
+        DependentColumnFilter dependentColumnFilter = new DependentColumnFilter(Bytes.toBytes("info"), Bytes.toBytes("age"));
+        scan.setFilter(dependentColumnFilter);
+        printMessage(table.getScanner(scan));
+
     }
 
     /**
@@ -27,7 +44,6 @@ public class FilterTest {
         SingleColumnValueFilter singleColumnValueFilter = new SingleColumnValueFilter(Bytes.toBytes("info"),  //列族
                 Bytes.toBytes("age"),  //列名
                 CompareFilter.CompareOp.EQUAL, Bytes.toBytes("240"));
-
         scan.setFilter(singleColumnValueFilter);
         printMessage(table.getScanner(scan));
 
