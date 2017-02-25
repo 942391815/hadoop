@@ -2,6 +2,7 @@
  * Created by qiaogu on 2017/2/19.
  * hbase 的version 在创建版本的时候修改version
  */
+
 import java.io.IOException;
 import java.util.List;
 
@@ -25,26 +26,26 @@ public class HBaseTestCase {
         String columnFamily = "colfam1";
         try {
 
-//            if (true == HBaseTestCase.delete(tableName)) {
-//                System.out.println("Delete Table " + tableName + " success!");
+            if (true == HBaseTestCase.delete(tableName)) {
+                System.out.println("Delete Table " + tableName + " success!");
+
+            }
 //
-//            }
-//
-//            HBaseTestCase.create(tableName, columnFamily);
-//            HBaseTestCase.put(tableName, "row1", columnFamily, "column1",
-//                    "data1111112121asasasd");
-//            HBaseTestCase.put(tableName, "row2", columnFamily, "column2",
-//                    "data2");
-//            HBaseTestCase.put(tableName, "row3", columnFamily, "column3",
-//                    "data3");
-//            HBaseTestCase.put(tableName, "row4", columnFamily, "column4",
-//                    "data4");
-//            HBaseTestCase.put(tableName, "row5", columnFamily, "column5",
-//                    "data5");
+            HBaseTestCase.create(tableName, columnFamily);
+            HBaseTestCase.put(tableName, "row1", columnFamily, "column1",
+                    "data1111112121asasasd");
+            HBaseTestCase.put(tableName, "row2", columnFamily, "column2",
+                    "data2");
+            HBaseTestCase.put(tableName, "row3", columnFamily, "column3",
+                    "data3");
+            HBaseTestCase.put(tableName, "row4", columnFamily, "column4",
+                    "data4");
+            HBaseTestCase.put(tableName, "row5", columnFamily, "column5",
+                    "data5");
 
             HBaseTestCase.get(tableName, "row1");
 
-//            HBaseTestCase.scan(tableName);
+            HBaseTestCase.scan(tableName);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,10 +53,11 @@ public class HBaseTestCase {
     }
 
     static Configuration cfg = HBaseConfiguration.create();
+
     static {
-        cfg.set("hbase.zookeeper.quorum", "192.168.0.253");
-        cfg.set("hbase.rootdir", "hdfs://192.168.0.253:9000/hbase");
-        cfg.set("hbase.master", "192.168.0.253");
+        cfg.set("hbase.zookeeper.quorum", "hadoop");
+        cfg.set("hbase.rootdir", "hdfs://hadoop:9000/hbase");
+        cfg.set("hbase.master", "hadoop");
 //        System.setProperty("hadoop.home.dir","E:\\mytool\\hadoop-2.7.3");
 
 //        System.out.println(cfg.get("hbase.master"));
@@ -92,13 +94,11 @@ public class HBaseTestCase {
 
     public static void get(String tablename, String row) throws Exception {
         HTable table = new HTable(cfg, tablename);
-        Get get = new Get(Bytes.toBytes("row-1")); // co GetExample-3-NewGet Create get with specific row.
-        get.setMaxVersions();
-        get.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("qual1"));
+        Get get = new Get(Bytes.toBytes("row1")); // co GetExample-3-NewGet Create get with specific row.
+        get.addColumn(Bytes.toBytes("colfam1"), Bytes.toBytes("column1"));
         Result result = table.get(get);
         List<KeyValue> list = result.list();
-        for(final KeyValue kv:list){
-            // System.out.println("value: "+ kv+ " str: "+Bytes.toString(kv.getValue()));
+        for (KeyValue kv : list) {
             System.out.println(String.format("row:%s, family:%s, qualifier:%s, qualifiervalue:%s, timestamp:%s.",
                     Bytes.toString(kv.getRow()),
                     Bytes.toString(kv.getFamily()),
