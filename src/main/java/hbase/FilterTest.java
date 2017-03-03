@@ -4,11 +4,11 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.util.Counter;
 
 
 /**
- * todo 过滤器深入理解  hbase 基于数值的过滤，分页PageFilter  自定义过滤器
+ * todo 过滤器深入理解  hbase 基于数值的过滤，分页PageFilter  自定义过滤器 hbase 协处理器
+ *
  * <p/>
  * create 'user','info'
  * Created by qiaogu on 2017/2/25.
